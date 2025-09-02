@@ -19,14 +19,23 @@ app.use(express.json({ limit: "50mb" }));
 //cookie parser
 app.use(cookieParser());
 
+// Debug middleware to log cookies
+app.use((req, res, next) => {
+  console.log("Cookies received:", req.cookies);
+  next();
+});
+
 //cors => cors origin resorse sharing
-const origin =  process.env.ORIGIN
+const origin = process.env.ORIGIN || "https://lms-rosy-omega.vercel.app"
 console.log("🚀 ~ origin:", origin)
 app.use(
     cors({
-        origin: "https://lms-rosy-omega.vercel.app",
-        // origin: origin,
-        credentials:true
+        origin: origin,
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'x-refresh-token'],
+        exposedHeaders: ['x-refresh-token'],
+        optionsSuccessStatus: 200
     })
 );
 
@@ -57,7 +66,12 @@ app.use('/api/v1/', layoutRouter);
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {
     res.status(201).json({
         success: true,
-        message: "API is working"
+        message: "API is working",
+        cookies: req.cookies,
+        headers: {
+            origin: req.headers.origin,
+            cookie: req.headers.cookie
+        }
     })
 });
 

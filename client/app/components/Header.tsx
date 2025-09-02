@@ -52,16 +52,15 @@ useEffect(() => {
       });
     }
   }
-  if (data === null) {
-     if (isSuccess){
+  
+  // Only show success message when social auth is successful
+  if (isSuccess && data === null) {
     toast.success('Login Successfully');
   }
-  if (data === null) {
-    setLogout(true);
-  }
-  }
- 
-}, [data, user]);  
+  
+  // Only trigger logout when session is explicitly ended (not just null)
+  // Remove the automatic logout trigger that was causing the issue
+}, [data, user, isSuccess]);  
   useEffect(() => {
     setMounted(true);
   }, []);

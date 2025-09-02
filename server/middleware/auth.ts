@@ -11,6 +11,7 @@ export const isAuthenticated = CatchAsyncError(
     const access_token = req.cookies.access_token;
 
     if (!access_token) {
+      console.log("No access token found in cookies");
       return next(new ErrorHandler("Please login to access this resource", 401));
     }
 
@@ -20,12 +21,15 @@ export const isAuthenticated = CatchAsyncError(
         process.env.ACCESS_TOKEN as string
       ) as JwtPayload;
 
+      console.log("Token decoded successfully for user:", decoded.id);
+
       const redisKey = `user:${decoded.id}`;
       let userData = await redis.get(redisKey);
 
       let user;
       if (userData) {
         user = JSON.parse(userData);
+        console.log("User found in Redis cache");
 
         // If courses field is missing, fetch from MongoDB
         if (!user.courses || user.courses.length === 0) {
@@ -33,16 +37,20 @@ export const isAuthenticated = CatchAsyncError(
           await redis.set(redisKey, JSON.stringify(user)); // update Redis
         }
       } else {
+        console.log("User not found in Redis, fetching from MongoDB");
         user = await userModel.findById(decoded.id).select("+courses");
         if (!user) {
+          console.log("User not found in MongoDB");
           return next(new ErrorHandler("please login to access this resource", 404));
         }
         await redis.set(redisKey, JSON.stringify(user)); // cache to Redis
       }
 
       req.user = user;
+      console.log("Authentication successful for user:", user.email);
       next();
     } catch (error: any) {
+      console.log("Token verification failed:", error.message);
       return next(new ErrorHandler("Access token is invalid or expired", 401));
     }
   }

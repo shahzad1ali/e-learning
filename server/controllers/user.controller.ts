@@ -220,16 +220,18 @@ export const updateAccessToken = CatchAsyncError(async (req: Request, res: Respo
                        || req.headers["x-refresh-token"] 
                        || req.body.refresh_token;
 
-    const message = 'Could not refresh token';
+    // If no refresh token, just continue without updating (don't fail)
     if (!refresh_token || typeof refresh_token !== "string") {
-      return next(new ErrorHandler("Refresh token missing", 400));
+      console.log("No refresh token found, continuing without token refresh");
+      return next();
     }
 
     const decoded = Jwt.verify(refresh_token, process.env.REFRESH_TOKEN as string) as JwtPayload;
 
     const session = await redis.get(`user:${decoded.id}`);
     if (!session) {
-      return next(new ErrorHandler("Please login for access this resource!", 400));
+      console.log("No session found in Redis, continuing without token refresh");
+      return next();
     }
 
     const user = JSON.parse(session);
