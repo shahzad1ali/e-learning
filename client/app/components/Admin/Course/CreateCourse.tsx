@@ -165,7 +165,7 @@ const CreateCourse = () => {
                   setActive={setActive}
                   courseData={courseData}
                   handleCourseCreate={handleCourseCreate}
-                  isEdit={true}
+                  isEdit={false}
                   />
                 )
                 }
