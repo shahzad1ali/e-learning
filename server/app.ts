@@ -30,6 +30,8 @@ app.use(
     })
 );
 
+
+
 // api request limit
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, 
@@ -41,7 +43,7 @@ const limiter = rateLimit({
 })
 
 
-// routes
+// Routes
 app.use('/api/v1/', userRouter);
 app.use('/api/v1/', courseRouter);
 app.use('/api/v1/', orderRouter);
