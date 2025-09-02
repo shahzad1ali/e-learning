@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const redisUrl = process.env.REDIS_URL;
+console.log("🚀 ~ redisUrl:", redisUrl)
 
 if (!redisUrl) {
   throw new Error("❌ REDIS_URL not defined in environment variables");
