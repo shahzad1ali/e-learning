@@ -216,15 +216,20 @@ export const authorizeRoles = (...roles: string[]) => {
 //update access token
 export const updateAccessToken = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log("🔄 Token refresh attempt for:", req.originalUrl);
+    console.log("🍪 Cookies available:", Object.keys(req.cookies));
+    
     const refresh_token = req.cookies.refresh_token 
                        || req.headers["x-refresh-token"] 
                        || req.body.refresh_token;
 
     // If no refresh token, just continue without updating (don't fail)
     if (!refresh_token || typeof refresh_token !== "string") {
-      console.log("No refresh token found, continuing without token refresh");
+      console.log("⚠️ No refresh token found, continuing without token refresh");
       return next();
     }
+    
+    console.log("✅ Refresh token found, attempting to refresh");
 
     const decoded = Jwt.verify(refresh_token, process.env.REFRESH_TOKEN as string) as JwtPayload;
 

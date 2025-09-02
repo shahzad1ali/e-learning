@@ -8,10 +8,14 @@ import userModel from "../models/user.model";
 // authenticated user
 export const isAuthenticated = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log("🔐 Authentication check for:", req.originalUrl);
+    console.log("🍪 All cookies:", req.cookies);
+    
     const access_token = req.cookies.access_token;
 
     if (!access_token) {
-      console.log("No access token found in cookies");
+      console.log("❌ No access token found in cookies");
+      console.log("📋 Available cookies:", Object.keys(req.cookies));
       return next(new ErrorHandler("Please login to access this resource", 401));
     }
 

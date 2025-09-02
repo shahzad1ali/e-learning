@@ -4,7 +4,7 @@ import { isAuthenticated } from "../middleware/auth";
 import { authorizeRoles, updateAccessToken } from "../controllers/user.controller";
 const courseRouter = express.Router();
 
-courseRouter.post('/create-course', updateAccessToken,isAuthenticated,authorizeRoles("admin"), uploadCourse);
+courseRouter.post('/create-course', updateAccessToken, isAuthenticated, authorizeRoles("admin"), uploadCourse);
 
 courseRouter.put('/edit-course/:id', updateAccessToken,isAuthenticated,authorizeRoles("admin"), editCourse);
 

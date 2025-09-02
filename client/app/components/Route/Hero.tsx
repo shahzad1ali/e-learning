@@ -8,6 +8,7 @@ import { useTheme } from 'next-themes'
 import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi'
 import Loader from '../Loader/Loader'
 import { useRouter } from 'next/navigation'
+import banner from "../../../public/assets/banner-img-1.png"
 
 const Hero: FC = () => {
   const { theme } = useTheme();
@@ -32,6 +33,7 @@ const Hero: FC = () => {
 
   if (!mounted) return null // Prevent hydration mismatch
 
+  // const imageUrl = require("../../../public/assets/banner-img-1.png");
   
   const imageUrl = data?.layout?.banner?.image?.url ?? null
 
@@ -51,7 +53,7 @@ const Hero: FC = () => {
         {imageUrl ? (
           <div className="relative w-[250px] h-[250px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px]">
             <Image
-              src={imageUrl}
+              src={banner}
               alt="Hero Banner"
               fill
               className="object-contain z-10"
