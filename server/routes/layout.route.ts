@@ -7,7 +7,9 @@ const layoutRouter = express.Router();
 
 layoutRouter.post("/create-layout", updateAccessToken, isAuthenticated, authorizeRoles('admin'), createLayout);
 
+// Edit layout
 layoutRouter.put("/edit-layout", updateAccessToken, isAuthenticated, authorizeRoles('admin'), editLayout);
+
 
 // in your layout route file
 layoutRouter.get("/get-layout/:type", getLayoutByType);
