@@ -80,7 +80,7 @@ const Profile: FC<Props> = ({ user }) => {
         }
            {
           active === 3 && (
-            <div className="w-full h-full pl-7 px-2 800px:pl-8 bg-transparent mt-[40px]">
+            <div className="w-full h-full pl-7 px-2 800px:pl-8 bg-transparent mt-[80px]">
               <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-2 lg:gap-[25px] xl:grid-cols-3 xl:gap-[35px] ">
              {
               courses && courses.map((item: any,index: number) => (
