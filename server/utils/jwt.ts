@@ -21,16 +21,16 @@ interface ITokenOptions {
     expires: new Date(Date.now() + accessTokenExpire * 60 * 1000), // minutes to milliseconds
     maxAge: accessTokenExpire * 60 * 1000, // minutes to milliseconds
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
+    secure: true,
   };
 
     export const refreshTokenOptions: ITokenOptions = {
     expires: new Date(Date.now() + refreshTokenExpire * 24 * 60 * 60 * 1000), // days to milliseconds
     maxAge: refreshTokenExpire * 24 * 60 * 60 * 1000, // days to milliseconds
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
+    secure: true,
   };
   
 
