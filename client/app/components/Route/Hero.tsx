@@ -78,11 +78,11 @@ const Hero: FC = () => {
       <div className="w-full lg:w-[60%] flex justify-center lg:justify-start">
         <div className="w-full max-w-[500px] flex flex-col items-center lg:items-start text-center lg:text-left">
           <h2 className="text-[26px] lg:text-[48px] font-[600] font-Josefin leading-snug lg:leading-[60px]">
-            {data?.layout?.banner?.title}
+            {data?.layout?.banner?.title || "Improve Your Online Learning Experience Better Instantly"}
           </h2>
 
           <p className="font-serif font-[500] text-[16px] lg:text-[18px] mt-4 text-opacity-90">
-            {data?.layout?.banner?.subTitle}
+            {data?.layout?.banner?.subTitle || "We have 20k+ Online courses & 500K+ Online registered student. Find your desired Courses from them."}
           </p>
 
           {/* Search Box */}
