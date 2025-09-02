@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
+import { server } from "@/redux/store";
 
 type Props = {
   videoUrl: string;
@@ -15,7 +16,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:8000/api/v1/getVdoCipherOTP", {
+      .post(`${server}/api/v1/getVdoCipherOTP`, {
         videoId: videoUrl,
       })
       .then((res) => {
