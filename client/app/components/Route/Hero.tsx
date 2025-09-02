@@ -33,9 +33,8 @@ const Hero: FC = () => {
 
   if (!mounted) return null // Prevent hydration mismatch
 
-  // const imageUrl = require("../../../public/assets/banner-img-1.png");
   
-  const imageUrl = data?.layout?.banner?.image?.url ?? null
+  // const imageUrl = data?.layout?.banner?.image?.url ?? null
 
   return (
      <>
@@ -50,7 +49,7 @@ const Hero: FC = () => {
     >
       {/* Left Side - Hero Image in Blue Circle */}
       <div className="relative w-[300px] h-[300px] lg:w-[350px] lg:h-[350px] xl:w-[500px] xl:h-[500px] rounded-full bg-[#39c1f3] flex items-center justify-center z-0">
-        {imageUrl ? (
+        {banner ? (
           <div className="relative w-[250px] h-[250px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px]">
             <Image
               src={banner}
