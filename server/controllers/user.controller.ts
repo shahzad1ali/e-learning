@@ -164,8 +164,16 @@ try {
 export const logoutUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.cookie("access_token", "", { maxAge: 1 });
-      res.cookie("refresh_token", "", { maxAge: 1 });
+      // Clear cookies with proper options for production
+      const cookieOptions = {
+        maxAge: 1,
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === "production" ? "none" as const : "lax" as const,
+        secure: process.env.NODE_ENV === "production",
+      };
+
+      res.cookie("access_token", "", cookieOptions);
+      res.cookie("refresh_token", "", cookieOptions);
 
       const userId = req.user?._id;
             // console.log("userId is" ,userId);
@@ -240,8 +248,19 @@ export const updateAccessToken = CatchAsyncError(async (req: Request, res: Respo
 
     req.user = user;
 
-    res.cookie("access_token", accessToken, accessTokenOptions);
-    res.cookie("refresh_token", newRefreshToken, refreshTokenOptions);
+    // Set cookies with proper options for production
+    const cookieOptions = {
+      ...accessTokenOptions,
+      sameSite: process.env.NODE_ENV === "production" ? "none" as const : "lax" as const,
+      secure: process.env.NODE_ENV === "production",
+    };
+
+    res.cookie("access_token", accessToken, cookieOptions);
+    res.cookie("refresh_token", newRefreshToken, {
+      ...refreshTokenOptions,
+      sameSite: process.env.NODE_ENV === "production" ? "none" as const : "lax" as const,
+      secure: process.env.NODE_ENV === "production",
+    });
 
     await redis.set(user._id,JSON.stringify(user), "EX", 604800); // 7 days
 
