@@ -9,7 +9,7 @@ import img2 from "../../../public/assets/review/1.jpg";
 import img3 from "../../../public/assets/review/2 (1).jpg";
 import img4 from "../../../public/assets/review/2.jpg";
 import img5 from "../../../public/assets/review/3.jpg";
-import img6 from "../../../public/assets/review/3.jpg";
+import img6 from "../../../public/assets/client-2.jpg";
 
 type Props = {}
 
@@ -47,7 +47,7 @@ export const reviews = [
   },
   {
     name: "Alex Johnson",
-    avatar: img1,
+    avatar: img6,
     profession: "Software Engineer | Tech Corp",
     comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
   },
