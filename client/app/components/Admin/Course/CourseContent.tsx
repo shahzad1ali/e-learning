@@ -231,10 +231,10 @@ const CourseContent: FC<Props> = ({
                       />
                     </div>
                     <div className="mb-3">
-                      <label className={styles.label}>Video Url</label>
+                      <label className={styles.label}>VdoCipher Video ID</label>
                       <input
                         type="text"
-                        placeholder="sdder"
+                        placeholder="Enter your VdoCipher video ID (e.g., 1234567890abcdef)"
                         className={`${styles.input}`}
                         value={item.videoUrl}
                         onChange={(e) => {
@@ -243,6 +243,9 @@ const CourseContent: FC<Props> = ({
                           setCourseContentData(updatedData);
                         }}
                       />
+                      <p className="text-sm text-gray-500 mt-1">
+                        💡 Get your video ID from VdoCipher dashboard after uploading your video
+                      </p>
                     </div>
                     <div className="mb-3">
                       <label className={styles.label}>Video Length (in minutes)</label>

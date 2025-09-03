@@ -165,10 +165,35 @@ export const getLayoutByType = CatchAsyncError(async (req: Request, res: Respons
     if (!type) {
       return next(new ErrorHandler("Layout type is required", 400));
     }
+    
     const layout = await LayoutModel.findOne({ type });
+    
+    // If layout doesn't exist, create default layout for categories
+    if (!layout && type === "Categories") {
+      console.log("📝 Creating default categories layout");
+      const defaultCategories = [
+        { title: "Programming" },
+        { title: "Web Development" },
+        { title: "Data Science" },
+        { title: "Design" },
+        { title: "Business" }
+      ];
+      
+      const newLayout = await LayoutModel.create({
+        type: "Categories",
+        categories: defaultCategories,
+      });
+      
+      return res.status(200).json({
+        success: true,
+        layout: newLayout,
+      });
+    }
+    
     if (!layout) {
       return next(new ErrorHandler(`${type} layout not found`, 404));
     }
+    
     res.status(200).json({
       success: true,
       layout,

@@ -24,8 +24,8 @@ const origin =  process.env.ORIGIN
 console.log("🚀 ~ origin:", origin)
 app.use(
     cors({
-        origin: "https://lms-rosy-omega.vercel.app",
-        // origin: origin,
+        // origin: "https://lms-rosy-omega.vercel.app",
+        origin: origin,
         credentials:true
     })
 );

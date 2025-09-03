@@ -738,15 +738,33 @@ interface IAddAnswerData {
   try {
     const { videoId } = req.body;
 
-    // console.log("📦 videoId received in backend:", videoId);
+    console.log("📦 videoId received in backend:", videoId);
+    console.log("🔑 VdoCipher API Secret exists:", !!process.env.VDOCIPHER_API_SECRET);
 
     if (!videoId || typeof videoId !== "string") {
+      console.log("❌ Invalid video ID:", videoId);
       return next(new ErrorHandler("Video ID is missing or invalid", 400));
     }
 
+    if (!process.env.VDOCIPHER_API_SECRET) {
+      console.log("❌ VdoCipher API Secret not configured");
+      return next(new ErrorHandler("VdoCipher API credentials not configured", 500));
+    }
+
+    console.log("🌐 Making request to VdoCipher API for video:", videoId);
+
     const response = await axios.post(
       `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
-      { ttl: 300 },
+      { 
+        ttl: 300,
+        // Add region and network settings to avoid restrictions
+        restrictions: {
+          allowedCountries: [], // Empty array means all countries allowed
+          blockedCountries: [],
+          allowedNetworks: [],
+          blockedNetworks: []
+        }
+      },
       {
         headers: {
           Accept: "application/json",
@@ -756,10 +774,17 @@ interface IAddAnswerData {
       }
     );
 
+    console.log("✅ VdoCipher API response received");
     res.json(response.data);
   } catch (error: any) {
-    console.error("❌ VdoCipher API Error:", error.response?.data || error.message);
-    return next(new ErrorHandler(error.response?.data?.message || error.message, 400));
+    console.error("❌ VdoCipher API Error Details:");
+    console.error("  - Status:", error.response?.status);
+    console.error("  - Data:", error.response?.data);
+    console.error("  - Message:", error.message);
+    console.error("  - Video ID:", req.body.videoId);
+    
+    const errorMessage = error.response?.data?.message || error.message || "Unknown error";
+    return next(new ErrorHandler(errorMessage, 400));
   }
 });
 
