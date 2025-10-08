@@ -34,7 +34,7 @@ export const uploadCourse = CatchAsyncError(async(req:Request,res:Response,next:
 })
 
 
-// edit course
+// edit course server admin
 // export const editCourse = CatchAsyncError(
 //   async (req: Request, res: Response, next: NextFunction) => {
 //     const data = req.body as any;
