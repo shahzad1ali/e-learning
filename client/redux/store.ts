@@ -25,4 +25,4 @@ intializeApp();
 
 
 // server 
-export const server = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000/api/v1";
+export const server = process.env.NEXT_PUBLIC_BACKEND_URL || "https://e-learning-server-4toi.onrender.com/api/v1";
